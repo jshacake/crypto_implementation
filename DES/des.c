@@ -5,15 +5,19 @@
 
 void enc(unsigned char p[8], unsigned char k[8], unsigned char c[8])
 {
-	// round block
-	unsigned char r[8] = {'\x00', };
-	// block... just in case
-	unsigned char b[8] = {'\x00', };
+	// block input
+	unsigned char bi[8] = {'\x00', };
+	// block output
+	unsigned char bo[8] = {'\x00', };
 	
 	unsigned char rk[6][16] = { {'\x00', }, };
 	
 	key_schedule(k, rk);
-	initial_permutation(p, r);
+	initial_permutation(p, bi);
+	for (int i = 0; i < 8; i++) {
+		des_round(bi, rk, bo);
+		des_round(bo, rk, bi);
+	}
 	
 }
 
