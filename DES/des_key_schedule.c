@@ -10,12 +10,15 @@ void key_schedule(unsigned char k[8], unsigned char rks[16][6])
 	// pc-1
 	// key block (56-bit)
 	// kbl == key block left, kbr == key block right
-	// they only need 7-bit..
+	// they only need 7-bit for one byte..
 	unsigned char kbl[4] = { '\x00', };
 	unsigned char kbr[4] = { '\x00', }; 
 	
 	pc_1(k, kbl, kbr);
 
+	
+	// pc-2
+	
 	// 1
 	bit_rotate_1(kbl, kbr);
 	pc_2(kbl, kbr, rks[0]);
@@ -79,47 +82,120 @@ void key_schedule(unsigned char k[8], unsigned char rks[16][6])
 	// 16
 	bit_rotate_1(kbl, kbr);
 	pc_2(kbl, kbr, rks[15]);
+	
+	printf("[*] DONE\n");
 }
 
 
 
 void bit_rotate_1(unsigned char kbl[4], unsigned char kbr[4]) {
-	unsigned char tmp;
 	
-	tmp = kbl[0];
+//	printf("[*] bit rotate 1\n");
+//	printf("[(BEFORE)bit rotate 1] kbl == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbl[i]);
+//	}
+//	printf(",  bkr == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbr[i]);
+//	}
+//	printf("\n");
 	
-	kbl[0] = kbl[1];
-	kbl[1] = kbl[2];
-	kbl[2] = kbl[3];
-	kbl[3] = tmp;
+	kbl[0]  =   kbl[0] << 1;
+	kbl[0] |= ( kbl[1] >> 6 ) & 1;
+	kbl[1]  =   kbl[1] << 1;
+	kbl[1] |= ( kbl[2] >> 6 ) & 1;
+	kbl[2]  =   kbl[2] << 1;
+	kbl[2] |= ( kbl[3] >> 6 ) & 1;
+	kbl[3]  =   kbl[3] << 1;
+	kbl[3] |= ( kbl[0] >> 7 ) & 1;
 	
-	tmp = kbr[0];
 	
-	kbr[0] = kbr[1];
-	kbr[1] = kbr[2];
-	kbr[2] = kbr[3];
-	kbr[3] = tmp;
+	kbr[0]  =   kbr[0] << 1;
+	kbr[0] |= ( kbr[1] >> 6 ) & 1;
+	kbr[1]  =   kbr[1] << 1;
+	kbr[1] |= ( kbr[2] >> 6 ) & 1;
+	kbr[2]  =   kbr[2] << 1;
+	kbr[2] |= ( kbr[3] >> 6 ) & 1;
+	kbr[3]  =   kbr[3] << 1;
+	kbr[3] |= ( kbr[0] >> 7 ) & 1;
+	
+	for (int i = 0; i < 4; i++) {
+		kbl[i] = kbl[i] & '\x7f';
+	}
 		
+//	printf("[(AFTER)bit rotate 1] kbl == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbl[i]);
+//	}
+//	printf(",  bkr == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbr[i]);
+//	}
+//	printf("\n");
+
 }
 
 void bit_rotate_2(unsigned char kbl[4], unsigned char kbr[4]) {
-	unsigned char a, b;
+
+//	printf("[*] bit rotate 2\n");
+//	printf("[(BEFORE)bit rotate 2] kbl == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbl[i]);
+//	}
+//	printf(",  bkr == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbr[i]);
+//	}
+//	printf("\n");
 	
-	a = kbl[0];
-	b = kbl[1];
 	
-	kbl[0] = kbl[2];
-	kbl[1] = kbl[3];
-	kbl[2] = a;
-	kbl[3] = b;
+	unsigned char bit = '\x00';
 	
-	a = kbr[0];
-	b = kbr[1];
+	bit |= ( kbl[0] >> 6 ) & 1;
+	kbl[0]  = kbl[0] << 2;
+	kbl[0] |= ( ( kbl[1] >> 6 ) & 1 ) << 1;
+	kbl[0] |= ( ( kbl[1] >> 5 ) & 1 );
+	kbl[1]  = kbl[1] << 2;
+	kbl[1] |= ( ( kbl[2] >> 6 ) & 1 ) << 1;
+	kbl[1] |= ( ( kbl[2] >> 5 ) & 1 );
+	kbl[2]  = kbl[2] << 2;
+	kbl[2] |= ( ( kbl[3] >> 6 ) & 1 ) << 1;
+	kbl[2] |= ( ( kbl[3] >> 5 ) & 1 );
+	kbl[3]  = kbl[3] << 2;
+	kbl[3] |= bit << 1;
+	kbl[3] |= ( ( kbl[0] >> 7 ) & 1 );
+	for (int i = 0; i < 4; i++) {
+		kbl[i] = kbl[i] & '\x7f';
+	}
 	
-	kbr[0] = kbr[2];
-	kbr[1] = kbr[3];
-	kbr[2] = a;
-	kbr[3] = b;
+	
+	bit |= ( kbr[0] >> 6 ) & 1;
+	kbr[0]  = kbr[0] << 2;
+	kbr[0] |= ( ( kbr[1] >> 6 ) & 1 ) << 1;
+	kbr[0] |= ( ( kbr[1] >> 5 ) & 1 );
+	kbr[1]  = kbr[1] << 2;
+	kbr[1] |= ( ( kbr[2] >> 6 ) & 1 ) << 1;
+	kbr[1] |= ( ( kbr[2] >> 5 ) & 1 );
+	kbr[2]  = kbr[2] << 2;
+	kbr[2] |= ( ( kbr[3] >> 6 ) & 1 ) << 1;
+	kbr[2] |= ( ( kbr[3] >> 5 ) & 1 );
+	kbr[3]  = kbr[3] << 2;
+	kbr[3] |= bit << 1;
+	kbr[3] |= ( ( kbr[0] >> 7 ) & 1 );
+	for (int i = 0; i < 4; i++) {
+		kbr[i] = kbr[i] & '\x7f';
+	}
+	
+//	printf("[(AFTER)bit rotate 2] kbl == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbl[i]);
+//	}
+//	printf(",  r == ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x", kbr[i]);
+//	}
+//	printf("\n");
 		
 }
 

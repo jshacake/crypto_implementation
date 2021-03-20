@@ -12,7 +12,16 @@ void enc(unsigned char p[8], unsigned char k[8], unsigned char c[8])
 	// round keys
 	unsigned char rk[16][6] = { {'\x00'}, };
 	
+	
+	
 	key_schedule(k, rk);
+	for (int i = 0; i < 16; i++) {
+		printf("[*] round key[%2.d] : 0x", i);
+		for (int j = 0; j < 6; j++) {
+			printf("%X", rk[i][j]);
+		}
+		printf("\n");
+	}
 	
 	// initial permutation
 	initial_permutation(p, bi);
@@ -81,14 +90,14 @@ void dec(unsigned char c[8], unsigned char k[8], unsigned char p[8])
 int main() {
 	unsigned char p[8] = "jshack_!";
 	unsigned char c[8] = {'\x00',};
-	unsigned char k[8] = "loveyou";
+	unsigned char k[8] = "\x11\x22\x33\x44\x55\x66\x77\x88";
 	
-	printf("[0] plaintext : 0x%x\n", p);
-	printf("[0] ciphertext : 0x%x\n", c);
-	printf("\n");
+//	printf("[0] plaintext : 0x%x\n", p);
+//	printf("[0] ciphertext : 0x%x\n", c);
+//	printf("\n");
 	
 	enc(p, k, c);
-	dec(c, k, p);
+//	dec(c, k, p);
 	
 	return 0;
 }
