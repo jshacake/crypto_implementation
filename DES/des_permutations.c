@@ -1,5 +1,8 @@
 void initial_permutation(unsigned char i[8], unsigned char o[8])
 {
+	// initialize
+	for (int i = 0; i < 8; i++) o[i] = '\x00';
+	
 	o[0] |= ( ( i[7] >> 6 ) & 1 ) << 7;
 	o[0] |= ( ( i[6] >> 6 ) & 1 ) << 6;
 	o[0] |= ( ( i[5] >> 6 ) & 1 ) << 5;
@@ -75,6 +78,9 @@ void initial_permutation(unsigned char i[8], unsigned char o[8])
 }
 void final_permutation(unsigned char i[8], unsigned char o[8])
 {
+	// initialize
+	for (int i = 0; i < 8; i++) o[i] = '\x00';
+	
 	o[0] |= ( i[4] & 1 ) << 7;
 	o[0] |= ( i[0] & 1 ) << 6;
 	o[0] |= ( i[5] & 1 ) << 5;
@@ -150,6 +156,9 @@ void final_permutation(unsigned char i[8], unsigned char o[8])
 }
 void f_permutation(unsigned char i[4], unsigned char o[4])
 {
+	// initialize
+	for (int i = 0; i < 4; i++) o[i] = '\x00';
+	
 	o[0] |= ( i[1] & 1 ) << 7;
 	o[0] |= ( ( i[0] >> 1 ) & 1 ) << 6;
 	o[0] |= ( ( i[2] >> 4 ) & 1 ) << 5;

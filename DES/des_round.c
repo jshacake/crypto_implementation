@@ -1,4 +1,4 @@
-void des_round(unsigned char b[8], unsigned char rk[6])
+void des_round(unsigned char bi[8], unsigned char rk[6], unsigned char bo[8])
 {
 }
 

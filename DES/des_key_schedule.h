@@ -1,1 +1,1 @@
-void key_schedule(unsigned char k[8], unsigned char rk[6][16]);
+void key_schedule(unsigned char k[8], unsigned char rks[16][6]);

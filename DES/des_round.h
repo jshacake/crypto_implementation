@@ -3,7 +3,7 @@
 	@@ input : bi[8]
 	@@ output : bo[8]
 	@@@ caller : enc, dec
-	@@@@ Description : 
+	@@@@ Description : for the round key, i need a data type which size is 6-byte, so 'rk[]' is 'int' not 'char'
 	
 	@ name : f
 	@@ input : bi[4]
