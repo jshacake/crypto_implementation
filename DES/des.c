@@ -15,13 +15,13 @@ void enc(unsigned char p[8], unsigned char k[8], unsigned char c[8])
 	
 	
 	key_schedule(k, rk);
-	for (int i = 0; i < 16; i++) {
-		printf("[*] round key[%2.d] : 0x", i);
-		for (int j = 0; j < 6; j++) {
-			printf("%X", rk[i][j]);
-		}
-		printf("\n");
-	}
+//	for (int i = 0; i < 16; i++) {
+//		printf("[*] round key[%2.d] : 0x", i);
+//		for (int j = 0; j < 6; j++) {
+//			printf("%X", rk[i][j]);
+//		}
+//		printf("\n");
+//	}
 	
 	// initial permutation
 	initial_permutation(p, bi);
@@ -42,6 +42,8 @@ void enc(unsigned char p[8], unsigned char k[8], unsigned char c[8])
 	for (int i = 0; i < 8; i++) {
 		bi[i] = bo[ ( i + 4 ) % 8 ];
 	}
+	
+	
 	// inverse permutation
 	final_permutation(bi, bo);
 	
@@ -92,12 +94,16 @@ int main() {
 	unsigned char c[8] = {'\x00',};
 	unsigned char k[8] = "\x11\x22\x33\x44\x55\x66\x77\x88";
 	
-//	printf("[0] plaintext : 0x%x\n", p);
-//	printf("[0] ciphertext : 0x%x\n", c);
-//	printf("\n");
+	printf("[0] plaintext : 0x%s\n", p);
+	printf("[0] ciphertext : 0x%x%x%x%x\n", c[0], c[1], c[2], c[3]);
+	printf("\n");
 	
 	enc(p, k, c);
 //	dec(c, k, p);
+
+	printf("[1] plaintext : 0x%s\n", p);
+	printf("[1] ciphertext : 0x%x%x%x%x\n", c[0], c[1], c[2], c[3]);
+	printf("\n");
 	
 	return 0;
 }

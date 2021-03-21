@@ -83,7 +83,7 @@ void key_schedule(unsigned char k[8], unsigned char rks[16][6])
 	bit_rotate_1(kbl, kbr);
 	pc_2(kbl, kbr, rks[15]);
 	
-	printf("[*] DONE\n");
+//	printf("[*] DONE\n");
 }
 
 

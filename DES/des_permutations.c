@@ -156,7 +156,7 @@ void final_permutation(unsigned char i[8], unsigned char o[8])
 }
 void f_permutation(unsigned char i[4], unsigned char o[4])
 {
-	// initialize
+	// initialize.. just in case :/
 	for (int i = 0; i < 4; i++) o[i] = '\x00';
 	
 	o[0] |= ( i[1] & 1 ) << 7;
