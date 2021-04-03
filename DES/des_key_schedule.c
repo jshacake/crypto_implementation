@@ -83,6 +83,13 @@ void key_schedule(unsigned char k[8], unsigned char rks[16][6])
 	bit_rotate_1(kbl, kbr);
 	pc_2(kbl, kbr, rks[15]);
 	
+//	for (int i = 0; i < 16; i++) {
+//	printf("[des_key_scheulde.c] schedule key[%d] : ", i);
+//		for (int j = 0; j < 6; j++) {
+//			printf("%x ", rks[i][j]);
+//		}
+//		printf("\n");
+//	}
 //	printf("[*] DONE\n");
 }
 

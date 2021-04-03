@@ -5,9 +5,9 @@
 
 void enc(unsigned char p[8], unsigned char k[8], unsigned char c[8])
 {
-	// block input
+	// block for input
 	unsigned char bi[8] = {'\x00', };
-	// block output
+	// block for output
 	unsigned char bo[8] = {'\x00', };
 	// round keys
 	unsigned char rk[16][6] = { {'\x00'}, };
@@ -15,38 +15,39 @@ void enc(unsigned char p[8], unsigned char k[8], unsigned char c[8])
 	
 	
 	key_schedule(k, rk);
-//	for (int i = 0; i < 16; i++) {
-//		printf("[*] round key[%2.d] : 0x", i);
-//		for (int j = 0; j < 6; j++) {
-//			printf("%X", rk[i][j]);
-//		}
-//		printf("\n");
-//	}
-	
+		
 	// initial permutation
-	initial_permutation(p, bi);
-	
-	//=========================================DONE LINE=========================================
+	initial_permutation(p, bi);		// p---->bi
 	
 	// 16 round
 	for (int i = 0; i < 16; i++) {
+//		printf("[des.c] Round[%d] : ", i);
+//		for (int j = 0; j < 8; j++) {
+//			printf("%x ", bi[j]);
+//		}
+//		printf("\n");
+		
 		des_round(bi, rk[i], bo);
+		
 		for (int j = 0; j < 8; j++) {
 			// bo ---> bi and initialize bo[]
 			bi[j] = bo[j];
-			bo[j] = '\x00';
-		}
+		}	
 	}
 	
 	// 32-bit swap
 	for (int i = 0; i < 8; i++) {
-		bi[i] = bo[ ( i + 4 ) % 8 ];
+		bo[i] = bi[ ( i + 4 ) % 8 ];
 	}
+	// Now result is in unsigned char bo[8]
 	
+	// bi <----> bo one more time.
+	for (int i = 0; i < 8; i++) {
+		bi[i] = bo[i];
+	}
 	
 	// inverse permutation
 	final_permutation(bi, bo);
-	
 	
 	// finish
 	for (int i = 0; i < 8; i++) c[i] = bo[i];
@@ -79,31 +80,19 @@ void dec(unsigned char c[8], unsigned char k[8], unsigned char p[8])
 	
 	// 32-bit swap
 	for (int i = 0; i < 8; i++) {
-		bi[i] = bo[ ( i + 4 ) % 8 ];
+		bo[i] = bi[ ( i + 4 ) % 8 ];
 	}
+	// Now result is in unsigned char bo[8]
+	
+	// bi <----> bo one more time.
+	for (int i = 0; i < 8; i++) {
+		bi[i] = bo[i];
+		bo[i] = '\x00';
+	}
+	
 	// inverse permutation
 	final_permutation(bi, bo);
 	
-	
 	// finish
 	for (int i = 0; i < 8; i++) p[i] = bo[i];
-}
-
-int main() {
-	unsigned char p[8] = "jshack_!";
-	unsigned char c[8] = {'\x00',};
-	unsigned char k[8] = "\x11\x22\x33\x44\x55\x66\x77\x88";
-	
-	printf("[0] plaintext : 0x%s\n", p);
-	printf("[0] ciphertext : 0x%x%x%x%x\n", c[0], c[1], c[2], c[3]);
-	printf("\n");
-	
-	enc(p, k, c);
-//	dec(c, k, p);
-
-	printf("[1] plaintext : 0x%s\n", p);
-	printf("[1] ciphertext : 0x%x%x%x%x\n", c[0], c[1], c[2], c[3]);
-	printf("\n");
-	
-	return 0;
 }

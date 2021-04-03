@@ -54,62 +54,70 @@ unsigned char S_box[8][4][16] =
 
 void expansion(unsigned char bi[4], unsigned char bo[6]) {
 	bo[0] |= ( bi[3] & 1 ) << 7;				// 32
-	bo[0] |= ( ( bo[0] >> 7 ) & 1 ) << 6;		// 1
-	bo[0] |= ( ( bo[0] >> 6 ) & 1 ) << 5;		// 2
-	bo[0] |= ( ( bo[0] >> 5 ) & 1 ) << 4;		// 3
-	bo[0] |= ( ( bo[0] >> 4 ) & 1 ) << 3;		// 4
-	bo[0] |= ( ( bo[0] >> 3 ) & 1 ) << 2;		// 5
-	bo[0] |= ( ( bo[0] >> 4 ) & 1 ) << 1;		// 4
-	bo[0] |= ( ( bo[0] >> 3 ) & 1 );			// 5
+	bo[0] |= ( ( bi[0] >> 7 ) & 1 ) << 6;		// 1
+	bo[0] |= ( ( bi[0] >> 6 ) & 1 ) << 5;		// 2
+	bo[0] |= ( ( bi[0] >> 5 ) & 1 ) << 4;		// 3
+	bo[0] |= ( ( bi[0] >> 4 ) & 1 ) << 3;		// 4
+	bo[0] |= ( ( bi[0] >> 3 ) & 1 ) << 2;		// 5
+	bo[0] |= ( ( bi[0] >> 4 ) & 1 ) << 1;		// 4
+	bo[0] |= ( ( bi[0] >> 3 ) & 1 );			// 5
 	
-	bo[1] |= ( ( bo[0] >> 2 ) & 1 ) << 7;		// 6
-	bo[1] |= ( ( bo[0] >> 1 ) & 1 ) << 6;		// 7
-	bo[1] |= ( bo[0] & 1 ) << 5;				// 8
-	bo[1] |= ( ( bo[1] >> 7 ) & 1 ) << 4;		// 9
-	bo[1] |= ( bo[0] & 1 ) << 3;				// 8
-	bo[1] |= ( ( bo[1] >> 7 ) & 1 ) << 2;		// 9
-	bo[1] |= ( ( bo[1] >> 6 ) & 1 ) << 1;		// 10
-	bo[1] |= ( ( bo[1] >> 5 ) & 1 );			// 11
+	bo[1] |= ( ( bi[0] >> 2 ) & 1 ) << 7;		// 6
+	bo[1] |= ( ( bi[0] >> 1 ) & 1 ) << 6;		// 7
+	bo[1] |= ( bi[0] & 1 ) << 5;				// 8
+	bo[1] |= ( ( bi[1] >> 7 ) & 1 ) << 4;		// 9
+	bo[1] |= ( bi[0] & 1 ) << 3;				// 8
+	bo[1] |= ( ( bi[1] >> 7 ) & 1 ) << 2;		// 9
+	bo[1] |= ( ( bi[1] >> 6 ) & 1 ) << 1;		// 10
+	bo[1] |= ( ( bi[1] >> 5 ) & 1 );			// 11
 	
-	bo[2] |= ( ( bo[1] >> 4 ) & 1 ) << 7;		// 12
-	bo[2] |= ( ( bo[1] >> 3 ) & 1 ) << 6;		// 13
-	bo[2] |= ( ( bo[1] >> 4 ) & 1 ) << 5;		// 12
-	bo[2] |= ( ( bo[1] >> 3 ) & 1 ) << 4;		// 13
-	bo[2] |= ( ( bo[1] >> 2 ) & 1 ) << 3;		// 14
-	bo[2] |= ( ( bo[1] >> 1 ) & 1 ) << 2;		// 15
-	bo[2] |= ( bo[1] & 1 ) << 1;				// 16
-	bo[2] |= ( ( bo[2] >> 7 ) & 1 );			// 17
+	bo[2] |= ( ( bi[1] >> 4 ) & 1 ) << 7;		// 12
+	bo[2] |= ( ( bi[1] >> 3 ) & 1 ) << 6;		// 13
+	bo[2] |= ( ( bi[1] >> 4 ) & 1 ) << 5;		// 12
+	bo[2] |= ( ( bi[1] >> 3 ) & 1 ) << 4;		// 13
+	bo[2] |= ( ( bi[1] >> 2 ) & 1 ) << 3;		// 14
+	bo[2] |= ( ( bi[1] >> 1 ) & 1 ) << 2;		// 15
+	bo[2] |= ( bi[1] & 1 ) << 1;				// 16
+	bo[2] |= ( ( bi[2] >> 7 ) & 1 );			// 17
 	
-	bo[3] |= ( bo[1] & 1 ) << 7;				// 16
-	bo[3] |= ( ( bo[2] >> 7 ) & 1 ) << 6;		// 17
-	bo[3] |= ( ( bo[2] >> 6 ) & 1 ) << 5;		// 18
-	bo[3] |= ( ( bo[2] >> 5 ) & 1 ) << 4;		// 19
-	bo[3] |= ( ( bo[2] >> 4 ) & 1 ) << 3;		// 20
-	bo[3] |= ( ( bo[2] >> 3 ) & 1 ) << 2;		// 21
-	bo[3] |= ( ( bo[2] >> 4 ) & 1 ) << 1;		// 20
-	bo[3] |= ( ( bo[2] >> 3 ) & 1 );			// 21
+	bo[3] |= ( bi[1] & 1 ) << 7;				// 16
+	bo[3] |= ( ( bi[2] >> 7 ) & 1 ) << 6;		// 17
+	bo[3] |= ( ( bi[2] >> 6 ) & 1 ) << 5;		// 18
+	bo[3] |= ( ( bi[2] >> 5 ) & 1 ) << 4;		// 19
+	bo[3] |= ( ( bi[2] >> 4 ) & 1 ) << 3;		// 20
+	bo[3] |= ( ( bi[2] >> 3 ) & 1 ) << 2;		// 21
+	bo[3] |= ( ( bi[2] >> 4 ) & 1 ) << 1;		// 20
+	bo[3] |= ( ( bi[2] >> 3 ) & 1 );			// 21
 	
-	bo[4] |= ( ( bo[2] >> 2 ) & 1 ) << 7;		// 22
-	bo[4] |= ( ( bo[2] >> 1 ) & 1 ) << 6;		// 23
-	bo[4] |= ( ( bo[2] & 1 ) ) << 5;			// 24
-	bo[4] |= ( ( bo[3] >> 7 ) & 1 ) << 4;		// 25
-	bo[4] |= ( ( bo[2] & 1 ) ) << 3;			// 24
-	bo[4] |= ( ( bo[3] >> 7 ) & 1 ) << 2;		// 25
-	bo[4] |= ( ( bo[3] >> 6 ) & 1 ) << 1;		// 26
-	bo[4] |= ( ( bo[3] >> 5 ) & 1 );			// 27
+	bo[4] |= ( ( bi[2] >> 2 ) & 1 ) << 7;		// 22
+	bo[4] |= ( ( bi[2] >> 1 ) & 1 ) << 6;		// 23
+	bo[4] |= ( ( bi[2] & 1 ) ) << 5;			// 24
+	bo[4] |= ( ( bi[3] >> 7 ) & 1 ) << 4;		// 25
+	bo[4] |= ( ( bi[2] & 1 ) ) << 3;			// 24
+	bo[4] |= ( ( bi[3] >> 7 ) & 1 ) << 2;		// 25
+	bo[4] |= ( ( bi[3] >> 6 ) & 1 ) << 1;		// 26
+	bo[4] |= ( ( bi[3] >> 5 ) & 1 );			// 27
 	
-	bo[5] |= ( ( bo[3] >> 4 ) & 1 ) << 7;		// 28
-	bo[5] |= ( ( bo[3] >> 3 ) & 1 ) << 6;		// 29
-	bo[5] |= ( ( bo[3] >> 4 ) & 1 ) << 5;		// 28
-	bo[5] |= ( ( bo[3] >> 3 ) & 1 ) << 4;		// 29
-	bo[5] |= ( ( bo[3] >> 2 ) & 1 ) << 3;		// 30
-	bo[5] |= ( ( bo[3] >> 1 ) & 1 ) << 2;		// 31
-	bo[5] |= ( ( bo[3] & 1 ) ) << 1;			// 32
-	bo[5] |= ( ( bo[0] >> 7 ) & 1 );			// 1
+	bo[5] |= ( ( bi[3] >> 4 ) & 1 ) << 7;		// 28
+	bo[5] |= ( ( bi[3] >> 3 ) & 1 ) << 6;		// 29
+	bo[5] |= ( ( bi[3] >> 4 ) & 1 ) << 5;		// 28
+	bo[5] |= ( ( bi[3] >> 3 ) & 1 ) << 4;		// 29
+	bo[5] |= ( ( bi[3] >> 2 ) & 1 ) << 3;		// 30
+	bo[5] |= ( ( bi[3] >> 1 ) & 1 ) << 2;		// 31
+	bo[5] |= ( ( bi[3] & 1 ) ) << 1;			// 32
+	bo[5] |= ( ( bi[0] >> 7 ) & 1 );			// 1
 }
 
 void f(unsigned char bi[4], unsigned char rk[6], unsigned char bo[4])
 {
+	
+	// check
+//	printf("[des_round.c] [void f(bi, rk, bo)] bi : ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x ", bi[i]);
+//	}
+//	printf("\n");
+	
 	unsigned char expanded_block[6] = {'\x00', };
 	expansion(bi, expanded_block);
 	// block xor
@@ -120,7 +128,13 @@ void f(unsigned char bi[4], unsigned char rk[6], unsigned char bo[4])
 	expanded_block[4] = ( expanded_block[4] ^ rk[4] );
 	expanded_block[5] = ( expanded_block[5] ^ rk[5] );
 	
-	// expanded_block for s-box
+//	printf("[des_round.c] expanded block : ");
+//	for (int i = 0; i < 6; i++) {
+//		printf("%x ", expanded_block[i]);
+//	}
+//	printf("\n");
+	
+	// sb[] is for substitution. ( only use 6-bit )
 	unsigned char sb[8] = {'\x00', };
 	unsigned char tmp = '\x00';
 	
@@ -180,15 +194,17 @@ void f(unsigned char bi[4], unsigned char rk[6], unsigned char bo[4])
 	sb[7] |= ( ( expanded_block[5] >> 1 ) & 1 ) << 1;	// 47
 	sb[7] |= ( ( expanded_block[5] & 1 ) );				// 48
 	
-	// substitution by sBox..
+	// block[] is for permutation.
+	// i intended to do permutate right after constructing block[]
 	unsigned char block[4] = { '\x00', };
 	
+	
 	for (int i = 0; i < 8; i++) {	// there are 8 s-boxes
-		unsigned char r = '\x00';
-		unsigned char c = '\x00';
+		unsigned char r = '\x00';	// 00, 01, 10, 11
+		unsigned char c = '\x00';	// 0x0, ..., 0xf
 		
 		r |= ( ( ((sb[i] >> 5) & 1) << 1 )  | ( sb[i] & 1 ) );
-		c = ( ( sb[i] >> 1 ) & '\x0f' );
+		c = ( ( sb[i] >> 1 ) & '\x0f' );						// only use last 4 bit
 		
 		unsigned char tmp = '\x00';
 		tmp |= S_box[i][r][c];
@@ -212,8 +228,6 @@ void f(unsigned char bi[4], unsigned char rk[6], unsigned char bo[4])
 	}
 	
 	f_permutation(block, bo);
-	
-	
 }
 
 void des_round(unsigned char bi[8], unsigned char rk[6], unsigned char bo[8])
@@ -239,6 +253,13 @@ void des_round(unsigned char bi[8], unsigned char rk[6], unsigned char bo[8])
 	bo[2] = br[2];
 	bo[3] = br[3];
 	// block_xor
+	
+//	printf("[des_round.c] check for TMP[] : ");
+//	for (int i = 0; i < 4; i++) {
+//		printf("%x ", tmp[i]);
+//	}
+//	printf("\n\n");
+	
 	bo[4] = (bl[0] ^ tmp[0]);
 	bo[5] = (bl[1] ^ tmp[1]);
 	bo[6] = (bl[2] ^ tmp[2]);
